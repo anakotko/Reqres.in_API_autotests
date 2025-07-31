@@ -44,19 +44,19 @@
         <br>Gradle
       </td>
       <td align="center" width="110">
-        <a href="https://selenide.org/" target="_blank">
-          <img src="https://selenide.org/images/selenide-logo.png" width="48" height="48" alt="Selenide" />
+        <a href="https://rest-assured.io/" target="_blank">
+          <img src="media/screens/rest-assured.png" width="48" height="48" alt="Selenide" />
         </a>
-        <br>Selenide
+        <br>Rest-Assured
       </td>
     </tr>
     <tr>
       <!-- Вторая строка -->
       <td align="center" width="110">
-        <a href="https://aerokube.com/selenoid/" target="_blank">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="48" height="48" alt="Selenoid" />
+        <a href="https://telegram.org/" target="_blank">
+          <img src="media/screens/telegram.svg" width="48" height="48" alt="Selenoid" />
         </a>
-        <br>Selenoid
+        <br>Telegram
       </td>
       <td align="center" width="110">
         <a href="https://docs.qameta.io/allure/" target="_blank">
@@ -76,20 +76,17 @@
         </a>
         <br>GitHub
       </td>
-      <td align="center" width="110">
-        <a href="https://www.selenium.dev/" target="_blank">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/selenium/selenium-original.svg" width="48" height="48" alt="GitHub" />
-        </a>
-        <br>Selenium
-      </td>
     </tr>
   </table>
 </div>
 
-- Тесты написаны на **Java** с использованием фреймворка **Selenide** в **IntelliJ IDEA**
-- Сборка проекта осуществляется через **Gradle**
-- Запуск тестов в контейнерах **Selenoid**
-- Интеграция с **Jenkins** + автоматическая отправка отчетов в **Telegram**
+Автотесты для данного проекта написаны на <code>Java</code> с использованием библиотеки <code>REST-assured</code> для взаимодействия с REST api.
+
+В качестве фреймворка для запуска тестов используется <code>Junit5</code>, а в качестве сборщика проекта - <code>Gradle</code>. Произведена настройка CI в <code>Jenkins</code>.
+
+По результатам каждого тестового прогона создаётся <code>Allure</code> отчёт для визуализации результатов прогона.
+
+После прогона тестов <code>Telegram</code> бот присылает сообщение с информацией о прошедшем прогоне
 
 ---
 
@@ -112,16 +109,11 @@ gradle clean test
 
 
 ### Удаленный запуск (Jenkins)
+Для запуска тестов в Jenkins нужно нажать на кнопку Build With Parameters в соответствующей сборке
 
-```bash
-clean test
--Dselenoid.url=${SELENOID_URL}
--Dselenoid.login=${SELENOID_LOGIN}
--Dselenoid.password=${SELENOID_PASSWORD}
--Dbrowser=${BROWSER}
--Dversion=${BROWSER_VERSION}
--DbrowserSize=${BROWSER_SIZE}
-```
+<p align="center">
+<img src="media/screens/jenkins.png">
+</p>
 
 
 
