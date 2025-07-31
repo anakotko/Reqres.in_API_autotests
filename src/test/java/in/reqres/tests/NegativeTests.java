@@ -23,7 +23,7 @@ public class NegativeTests extends TestBase {
     @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Пользователь не найден (неверный email)")
     void userNotFoundTest() {
-        LoginBodyModel authData = new LoginBodyModel("eve.holt@reqres.in", "cityslicka");
+        LoginBodyModel authData = new LoginBodyModel("eve.holt55689@reqres.in", "cityslicka");
 
         LoginErrorResponseModel responce = step("Пользователь не найден", ()->
                 given(requestSpec)
