@@ -1,6 +1,10 @@
 package in.reqres.tests;
 
 import in.reqres.models.*;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 
@@ -13,72 +17,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static in.reqres.specs.LoginSpec.requestSpec;
 import static in.reqres.specs.LoginSpec.responceSpec;
 
-@Tag("reqres_api")
-public class RestAPIReqresTests extends TestBase {
+@Feature("Действия с пользователем, создание/изменение/удаление")
+public class UserTests extends TestBase {
 
     @Test
-    @DisplayName("Успешный вход в систему")
-    void successfulLoginTest() {
-        LoginBodyModel authData = new LoginBodyModel("eve.holt@reqres.in", "cityslicka");
-
-        LoginResponseModel responce = step("Make request: Successful login", ()->
-        given(requestSpec)
-                .body(authData)
-                .when()
-                .post("/login")
-                .then()
-                .spec(responceSpec(200))
-                .extract().as(LoginResponseModel.class));
-
-        step("Check token", ()->
-                assertEquals("QpwL5tke4Pnpja7X4", responce.getToken()));
-    }
-
-    @Test
-    @DisplayName("Успешная регистрация")
-    void successfulRegisterTest() {
-        LoginBodyModel authData = new LoginBodyModel("eve.holt@reqres.in", "cityslicka");
-
-        LoginResponseModel responce = step("Make request: Register new user", ()->
-        given(requestSpec)
-                .body(authData)
-                .when()
-                .post("/register")
-                .then()
-                .spec(responceSpec(200))
-                .extract().as(LoginResponseModel.class));
-
-        step("Check token", ()->
-                assertEquals("QpwL5tke4Pnpja7X4", responce.getToken()));
-
-        step("Check ID", () ->
-                assertThat(responce.getId(),not(emptyOrNullString())));
-    }
-
-    @Test
-    @DisplayName("Пользователь не найден (неверный email)")
-    void userNotFoundTest() {
-        LoginBodyModel authData = new LoginBodyModel("eve.holt@reqres.in", "cityslicka");
-
-        LoginErrorResponseModel responce = step("Make request: User not found", ()->
-        given(requestSpec)
-                .body(authData)
-                .when()
-                .post("/login")
-                .then()
-                .spec(responceSpec(400))
-                .extract().as(LoginErrorResponseModel.class));
-
-        step("Check error message", () ->
-                assertEquals("user not found", responce.getError()));
-    }
-
-    @Test
+    @Owner("anakotko")
+    @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Успешное создание нового пользователя")
     void createUserTest() {
         UserBodyModel userData = new UserBodyModel("morpheus", "leader");
 
-        UserResponceModel responce = step("Make request: Create User", ()->
+        UserResponceModel responce = step("Создание пользователя", ()->
         given(requestSpec)
                 .body(userData)
                 .when()
@@ -87,35 +36,26 @@ public class RestAPIReqresTests extends TestBase {
                 .spec(responceSpec(201))
                 .extract().as(UserResponceModel.class));
 
-        step("Check name", ()->
+        step("Проверка name", ()->
                 assertEquals("morpheus", responce.getName()));
 
-        step("Check job", ()->
+        step("Проверка job", ()->
                 assertEquals("leader", responce.getJob()));
 
-        step("Check ID", () ->
+        step("Проверка ID", () ->
                 assertThat(responce.getId(),not(emptyOrNullString())));
 
-        step("Check createdAt", () ->
+        step("Проверка createdAt", () ->
                 assertThat(responce.getCreatedAt(),not(emptyOrNullString())));
     }
 
-    @Test
-    @DisplayName("Конкретный пользователь не найден")
-    void singleUserNotFoundTest() {
-        step("Make request: Single User Not Found", ()->
-        given(requestSpec)
-                .when()
-                .get("/users/23")
-                .then()
-                .spec(responceSpec(404)));
-
-    }
 
     @Test
+    @Owner("anakotko")
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Успешное получение данных конкретного пользователя")
     void singleUserTest() {
-        SingleUserResponseModel responce = step("Make request: Get single user data", ()->
+        SingleUserResponseModel responce = step("Получение данных конкретного пользователя", ()->
         given(requestSpec)
                 .when()
                 .get("/users/2")
@@ -123,18 +63,20 @@ public class RestAPIReqresTests extends TestBase {
                 .spec(responceSpec(200))
                 .extract().as(SingleUserResponseModel.class));
 
-        step("Check ID", ()->
+        step("Проверка ID", ()->
         assertEquals(2, responce.getData().getId()));
 
-        step("Check name", ()->
+        step("Проверка name", ()->
         assertEquals("Janet", responce.getData().getFirstName()));
 
     }
 
     @Test
+    @Owner("anakotko")
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Успешное удаление пользователя")
     void deleteUserTest() {
-        step("Make request: Delete user and check status code", ()->
+        step("Удаление пользователя", ()->
         given(requestSpec)
                 .when()
                 .delete("/users/2")
@@ -143,11 +85,13 @@ public class RestAPIReqresTests extends TestBase {
     }
 
     @Test
+    @Owner("anakotko")
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Полное обновление пользователя (PUT)")
     void updateInfoPutTest() {
         UserBodyModel userPutData = new UserBodyModel("morpheus", "zion resident");
 
-        UserResponceModel responce = step("Make request: Update user information, PUT", ()->
+        UserResponceModel responce = step("Обновление информации пользователя, PUT", ()->
         given(requestSpec)
                 .body(userPutData)
                 .when()
@@ -156,22 +100,24 @@ public class RestAPIReqresTests extends TestBase {
                 .spec(responceSpec(200))
                 .extract().as(UserResponceModel.class));
 
-        step("Check name", ()->
+        step("Проверка name", ()->
                 assertEquals("morpheus", responce.getName()));
 
-        step("Check job", ()->
+        step("Проверка job", ()->
                 assertEquals("zion resident", responce.getJob()));
 
-        step("Check updatedAt", () ->
+        step("Проверка updatedAt", () ->
                 assertThat(responce.getUpdatedAt(),not(emptyOrNullString())));
     }
 
     @Test
+    @Owner("anakotko")
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Частичное обновление пользователя (PATCH)")
     void updateInfoPatchTest() {
         UserBodyModel userPatchData = new UserBodyModel("morpheus", "zion resident");
 
-        UserResponceModel responce = step("Make request: Update user information, Patch", ()->
+        UserResponceModel responce = step("Обновление информации пользователя, Patch", ()->
         given(requestSpec)
                 .body(userPatchData)
                 .when()
@@ -180,13 +126,13 @@ public class RestAPIReqresTests extends TestBase {
                 .spec(responceSpec(200))
                 .extract().as(UserResponceModel.class));
 
-        step("Check name", ()->
+        step("Проверка name", ()->
                 assertEquals("morpheus", responce.getName()));
 
-        step("Check job", ()->
+        step("Проверка job", ()->
                 assertEquals("zion resident", responce.getJob()));
 
-        step("Check updatedAt", () ->
+        step("Проверка updatedAt", () ->
                 assertThat(responce.getUpdatedAt(),not(emptyOrNullString())));
     }
 }
