@@ -4,11 +4,11 @@
   </a>
 </p>
 
-# Проект по автоматизации тестовых сценариев для API сервиса [Reqres.in](https://yadro.com/)
+# Проект по автоматизации тестовых сценариев для API сервиса [Reqres.in](https://reqres.in/)
 
 ## Содержание
 - [Технологический стек](#-технологический-стек)
-- [API-тесты](#-web-тесты)
+- [API-тесты](#-api-тесты)
 - [Запуск тестов в Jenkins](#-запуск-тестов-в-jenkins)
 - [Allure-отчет](#-allure-отчет)
 - [Уведомления в Telegram](#-уведомления-в-telegram)
@@ -100,7 +100,7 @@
 
 ---
 
-## [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg" width="40" height="40" alt="Jenkins"> Запуск тестов в Jenkins](https://jenkins.autotests.cloud/job/35-anakotko-hw14/)
+## [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg" width="40" height="40" alt="Jenkins"> Запуск тестов в Jenkins](https://jenkins.autotests.cloud/job/35-anakotko-Reqres.in/)
 
 ### Локальный запуск
 ```bash
@@ -117,7 +117,7 @@ gradle clean test
 
 
 
-## [<img src="https://avatars.githubusercontent.com/u/5879127?s=200&v=4" width="40" height="40" alt="Allure"> Allure-отчет](https://jenkins.autotests.cloud/job/35-anakotko-hw14/6/allure/)
+## [<img src="https://avatars.githubusercontent.com/u/5879127?s=200&v=4" width="40" height="40" alt="Allure"> Allure-отчет](https://jenkins.autotests.cloud/job/35-anakotko-Reqres.in/2/allure/)
 
 ### Главная страница Allure-отчета
 <img src="media/screens/allure_report.png" width="800" alt="Allure">
