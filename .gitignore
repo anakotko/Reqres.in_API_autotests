@@ -10,10 +10,3 @@ build/
 *.iml
 *.ipr
 
-# Игнорировать конкретные файлы
-notifications/config.json
-notifications/draft.txt
-
-# Игнорировать все .jar-файлы в папке notifications
-notifications/*.jar
-
