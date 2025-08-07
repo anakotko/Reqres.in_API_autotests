@@ -18,17 +18,17 @@ import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Owner("anakotko")
 @Feature("Регистрация")
 public class RegisterTests extends TestBase {
 
     @Test
-    @Owner("anakotko")
     @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Успешная регистрация")
     void successfulRegisterTest() {
         LoginBodyModel authData = new LoginBodyModel("eve.holt@reqres.in", "cityslicka");
 
-        LoginResponseModel responce = step("Регистрация нового пользователя", ()->
+        LoginResponseModel responce = step("Регистрация нового пользователя", () ->
                 given(requestSpec)
                         .body(authData)
                         .when()
@@ -37,10 +37,10 @@ public class RegisterTests extends TestBase {
                         .spec(responceSpec(200))
                         .extract().as(LoginResponseModel.class));
 
-        step("Check token", ()->
+        step("Проверка токена", () ->
                 assertEquals("QpwL5tke4Pnpja7X4", responce.getToken()));
 
-        step("Check ID", () ->
-                assertThat(responce.getId(),not(emptyOrNullString())));
+        step("Проверка ID", () ->
+                assertThat(responce.getId(), not(emptyOrNullString())));
     }
 }

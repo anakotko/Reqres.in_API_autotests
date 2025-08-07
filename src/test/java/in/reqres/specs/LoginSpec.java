@@ -20,7 +20,7 @@ public class LoginSpec {
             .header("x-api-key", "reqres-free-v1")
             .contentType(JSON);
 
-    public static ResponseSpecification responceSpec (int expectedStatusCode) {
+    public static ResponseSpecification responceSpec(int expectedStatusCode) {
         return new ResponseSpecBuilder()
                 .expectStatusCode(expectedStatusCode)
                 .log(STATUS)

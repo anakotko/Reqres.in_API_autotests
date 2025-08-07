@@ -15,17 +15,17 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Owner("anakotko")
 @Feature("Вход в систему")
 public class LoginTests extends TestBase {
 
     @Test
-    @Owner("anakotko")
     @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Успешный вход в систему")
     void successfulLoginTest() {
         LoginBodyModel authData = new LoginBodyModel("eve.holt@reqres.in", "cityslicka");
 
-        LoginResponseModel responce = step("Вход в систему", ()->
+        LoginResponseModel responce = step("Вход в систему", () ->
                 given(requestSpec)
                         .body(authData)
                         .when()
@@ -34,7 +34,7 @@ public class LoginTests extends TestBase {
                         .spec(responceSpec(200))
                         .extract().as(LoginResponseModel.class));
 
-        step("Check token", ()->
+        step("Проверка token", () ->
                 assertEquals("QpwL5tke4Pnpja7X4", responce.getToken()));
     }
 }

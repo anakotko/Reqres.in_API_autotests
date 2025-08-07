@@ -15,17 +15,17 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Owner("anakotko")
 @Feature("Негативные проверки с пользователем")
 public class NegativeTests extends TestBase {
 
     @Test
-    @Owner("anakotko")
     @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Пользователь не найден (неверный email)")
     void userNotFoundTest() {
         LoginBodyModel authData = new LoginBodyModel("eve.holt55689@reqres.in", "cityslicka");
 
-        LoginErrorResponseModel responce = step("Пользователь не найден", ()->
+        LoginErrorResponseModel responce = step("Пользователь не найден", () ->
                 given(requestSpec)
                         .body(authData)
                         .when()
@@ -39,11 +39,10 @@ public class NegativeTests extends TestBase {
     }
 
     @Test
-    @Owner("anakotko")
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Конкретный пользователь не найден")
     void singleUserNotFoundTest() {
-        step("Конкретный пользователь не найден", ()->
+        step("Конкретный пользователь не найден", () ->
                 given(requestSpec)
                         .when()
                         .get("/users/23")
